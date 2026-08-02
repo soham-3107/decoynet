@@ -1,0 +1,27 @@
+{
+  "brute_force": {
+    "enabled": true,
+    "max_attempts": 5,
+    "window_seconds": 15,
+    "severity_score": 85,
+    "description": "More than X failed login attempts within Y seconds from a single source IP."
+  },
+  "impossible_travel": {
+    "enabled": true,
+    "max_speed_kmh": 1000,
+    "severity_score": 90,
+    "description": "Logins from two distant geographical locations at a speed exceeding physical travel capabilities."
+  },
+  "port_scan": {
+    "enabled": true,
+    "max_ports": 8,
+    "window_seconds": 10,
+    "severity_score": 75,
+    "description": "Connection attempts to multiple distinct ports from a single source IP in a short timeframe."
+  },
+  "privilege_escalation": {
+    "enabled": true,
+    "severity_score": 95,
+    "description": "Unauthorized attempts to promote a user account to administrator privileges."
+  }
+}

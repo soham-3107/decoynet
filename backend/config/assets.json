@@ -1,0 +1,132 @@
+[
+  {
+    "id": "dc-01",
+    "name": "Active Directory Domain Controller",
+    "target": "10.0.0.5",
+    "type": "ip",
+    "risk_tier": "High-Risk",
+    "description": "Primary authentication and identity server for the enterprise domain.",
+    "blast_scope": {
+      "connected_nodes": ["Finance Database Server", "Production E-Commerce Web Server", "Development Sandbox Server"],
+      "records_exposed": 45000,
+      "propagation_time": 15
+    }
+  },
+  {
+    "id": "db-finance",
+    "name": "Finance Database Server",
+    "target": "10.0.0.20",
+    "type": "ip",
+    "risk_tier": "High-Risk",
+    "description": "Holds sensitive company financial records and payroll transaction tables.",
+    "blast_scope": {
+      "connected_nodes": ["Active Directory Domain Controller", "Production E-Commerce Web Server"],
+      "records_exposed": 12500,
+      "propagation_time": 25
+    }
+  },
+  {
+    "id": "web-prod",
+    "name": "Production E-Commerce Web Server",
+    "target": "10.0.0.10",
+    "type": "ip",
+    "risk_tier": "High-Risk",
+    "description": "Main public-facing e-commerce application host.",
+    "blast_scope": {
+      "connected_nodes": ["Finance Database Server", "Active Directory Domain Controller"],
+      "records_exposed": 120000,
+      "propagation_time": 35
+    }
+  },
+  {
+    "id": "srv-dev",
+    "name": "Development Sandbox Server",
+    "target": "10.0.0.100",
+    "type": "ip",
+    "risk_tier": "Low-Risk",
+    "description": "Non-production testing sandbox environment.",
+    "blast_scope": {
+      "connected_nodes": ["Staging Virtual Machine", "Active Directory Domain Controller"],
+      "records_exposed": 500,
+      "propagation_time": 120
+    }
+  },
+  {
+    "id": "vm-staging",
+    "name": "Staging Virtual Machine",
+    "target": "10.0.0.150",
+    "type": "ip",
+    "risk_tier": "Low-Risk",
+    "description": "Pre-production testing server for development team builds.",
+    "blast_scope": {
+      "connected_nodes": ["Development Sandbox Server"],
+      "records_exposed": 0,
+      "propagation_time": 180
+    }
+  },
+  {
+    "id": "wifi-guest",
+    "name": "Guest Wi-Fi DHCP Range",
+    "target": "192.168.50.0/24",
+    "type": "ip_range",
+    "risk_tier": "Low-Risk",
+    "description": "Untrusted network segment for office visitors and external devices.",
+    "blast_scope": {
+      "connected_nodes": ["Development Sandbox Server", "Staging Virtual Machine"],
+      "records_exposed": 0,
+      "propagation_time": 300
+    }
+  },
+  {
+    "id": "user-admin",
+    "name": "Domain Administrator Account",
+    "target": "admin",
+    "type": "user",
+    "risk_tier": "High-Risk",
+    "description": "Root administrative user with global permissions.",
+    "blast_scope": {
+      "connected_nodes": ["Active Directory Domain Controller", "Finance Database Server", "Production E-Commerce Web Server"],
+      "records_exposed": 150000,
+      "propagation_time": 10
+    }
+  },
+  {
+    "id": "user-finance",
+    "name": "Finance Director Account",
+    "target": "finance_mgr",
+    "type": "user",
+    "risk_tier": "High-Risk",
+    "description": "User account authorized to process bank wire transfers.",
+    "blast_scope": {
+      "connected_nodes": ["Finance Database Server"],
+      "records_exposed": 8500,
+      "propagation_time": 20
+    }
+  },
+  {
+    "id": "user-dev",
+    "name": "Developer Testing Account",
+    "target": "dev_user",
+    "type": "user",
+    "risk_tier": "Low-Risk",
+    "description": "Standard engineer credentials for accessing dev systems.",
+    "blast_scope": {
+      "connected_nodes": ["Development Sandbox Server", "Staging Virtual Machine"],
+      "records_exposed": 1000,
+      "propagation_time": 120
+    }
+  },
+  {
+    "id": "user-guest",
+    "name": "Temporary Guest Account",
+    "target": "guest_temp",
+    "type": "user",
+    "risk_tier": "Low-Risk",
+    "description": "Shared read-only credentials for visiting vendors.",
+    "blast_scope": {
+      "connected_nodes": ["Guest Wi-Fi DHCP Range"],
+      "records_exposed": 0,
+      "propagation_time": 240
+    }
+  }
+]
