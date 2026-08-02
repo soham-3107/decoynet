@@ -340,6 +340,9 @@ class SecurityEngine:
             # Check if already locked
             is_currently_locked = db.is_locked(target)
             action_taken = "already_blocked" if is_currently_locked else ("pending" if risk_tier == "High-Risk" else "locked_down")
+
+             # Generate the plain English translation (clean, single-line)
+            explainer = self.generate_plain_english(alert_type, alert_details, asset_info, action_taken)
             
             # Attacker Fingerprinting (Threat DNA)
             ip = target if target_type == "ip" else event.get("source_ip", "10.0.0.199")
